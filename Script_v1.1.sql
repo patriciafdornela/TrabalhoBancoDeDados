@@ -284,3 +284,98 @@ FROM cidade c
 JOIN hotel h ON c.id_cidade = h.id_cidade
 GROUP BY c.nome
 HAVING COUNT(h.id_hotel) > 1;
+
+
+--  5. SQL/DML- Atualizações
+--  Apresentar um Script SQL com o objetivo de implementar as seguintes operações de atualização do Banco de Dados:
+
+--  (a) Uma inserção que envolva integridade referencial.
+
+INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, categoria) VALUES
+('id_hot_10', 'id_cid_10', 'id_res_10', 'Hotel Atlante Plaza', 'Av. Boa Viagem, 5426', 8.4);
+
+SELECT * FROM hotel WHERE id_hotel = 'id_hot_10';
+
+-- 	(b) Uma insersção que envolva cláusula CHECK.
+
+ALTER TABLE quarto ADD CHECK(diaria > 349.9);
+
+INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
+('Suíte Master', 10, 250.00);
+
+SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
+
+INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
+('Suíte Master', 10, 750.00);
+
+SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
+
+--  (c) Uma inserção de dados em uma tabela à partir de dados em outra tabela, ou seja,
+--  uso do SELECT em INSERT.
+
+INSERT INTO ponto_turistico (id_pt_turistico, id_cidade, descricao, endereco)
+SELECT id_pt_turistico, id_cidade, descricao, endereco
+FROM casa_de_shows;
+
+INSERT INTO ponto_turistico (id_pt_turistico, id_cidade, descricao, endereco)
+SELECT id_pt_turistico, id_cidade, descricao, endereco
+FROM museus;
+
+INSERT INTO igreja (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, estilo) VALUES
+('id_pt_10', 'id_cid_06', 'Santuário de Nossa Senhora de Guadalupe', 'Praca Senador Correia n° 128, Curitiba, Paraná', '1952-11-11', 'gótico'),
+('id_pt_11', 'id_cid_06', 'Primeira Igreja Batista de Curitiba', 'Rua Bento Viana 1200 Batel, Curitiba, Paraná', '1914-05-13', 'moderno'),
+('id_pt_12', 'id_cid_07', 'Catedral Metropolitana', 'Rua Sobral, s/n, Centro, Fortaleza', '1978-12-22', 'neogótico/românico');
+
+INSERT INTO ponto_turistico (id_pt_turistico, id_cidade, descricao, endereco)
+SELECT id_pt_turistico, id_cidade, descricao, endereco
+FROM igreja
+WHERE id_cidade = 'id_cid_06';
+
+SELECT * FROM ponto_turistico pt WHERE pt.id_cidade = 'id_cid_06';
+
+--  (d) Uma remoção que envolva integridade referencial usando CASCADE.
+
+ALTER TABLE restaurante DROP CONSTRAINT fk_restaurante_cidade;
+
+ALTER TABLE restaurante
+ADD CONSTRAINT fk_res_cidade FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
+ON UPDATE NO ACTION
+ON DELETE CASCADE;
+
+DELETE FROM hotel WHERE id_restaurante = 'id_res_04';
+
+--  (e) Uma remoção que envolva integridade referencial usando SET NULL.
+
+ALTER TABLE fundador_museus DROP CONSTRAINT pk_fundador_museus;
+
+ALTER TABLE fundador_museus 
+ALTER COLUMN id_fundador DROP NOT NULL;
+
+ALTER TABLE fundador_museus DROP CONSTRAINT fk_fm_fundador;
+
+ALTER TABLE fundador_museus
+ADD CONSTRAINT fk_fm_fund FOREIGN KEY (id_fundador) REFERENCES fundador (id_fundador)
+ON UPDATE NO ACTION
+ON DELETE SET NULL;
+
+DELETE FROM fundador WHERE id_fundador = 'id_fun_02';
+
+SELECT * FROM fundador;
+SELECT * FROM fundador_museus;
+
+--  (f) Uma atualização que envolVa dados obtidos de consultas a outras tabelas
+
+UPDATE quarto q SET diaria = diaria + (diaria*0.15)
+FROM  cidade c 
+JOIN hotel h ON h.id_cidade = c.id_cidade
+JOIN hotel_quarto hq ON hq.id_hotel = h.id_hotel
+WHERE c.id_cidade = 'id_cid_01'
+AND h.id_cidade = c.id_cidade
+AND q.tipo_quarto = hq.tipo_quarto;
+
+SELECT q.tipo_quarto, q.diaria, c.nome AS cidade
+FROM quarto q
+JOIN hotel_quarto hq ON q.tipo_quarto = hq.tipo_quarto
+JOIN hotel h ON hq.id_hotel = h.id_hotel
+JOIN cidade c ON h.id_cidade = c.id_cidade
+WHERE c.id_cidade = 'id_cid_01';
