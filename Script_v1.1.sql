@@ -160,14 +160,14 @@ INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, endereco, 
 ('id_res_03', 'id_cid_02', 'Palácio do Sushi', 'Rua Otto Pfuntzenreuter, 379 - Costa e Silva - São Paulo - SP' 'japonês', 200.00, 'sushis e sashimis'),
 ('id_res_04', 'id_cid_09', 'Churrascaria Freio de Ouro', 'R. José de Alencar, 460 - Menino Deus, Porto Alegre - RS', 'churrascaria', 180.00, 'carnes nobres'),
 ('id_res_05', 'id_cid_04', 'Paris 6 Bistrô', 'Avenida do Contorno, 6061 - Shopping Patio Savassi - Belo Horizonte - MG','francês', 220.00, 'culinária francesa contemporânea'),
-('id_res_06', 'id_cid_04', 'Tempero da Vovó','Avenida Sebastião de Brito, 273 - Dona Clara, Belo Horizonte - MG' 'caseiro', 90.00, 'comidas mineiras típicas'),
+('id_res_06', 'id_cid_04', 'Gero','R. São Paulo, 2320 - Lourdes, Belo Horizonte - MG' 'italiano', 160.00, 'massas e risotos'),
 ('id_res_07', 'id_cid_07', 'Mandir Restaurante Vegano', 'Rua Padre Francisco Pinto, 257 - Benfica, Fortaleza - CE' 'vegetariano', 110.00, 'pratos vegetarianos'),
 ('id_res_08', 'id_cid_08', 'Casa do Hamburguer', 'Rua Luiz Antony - Aparecida, 1072 - A, Manaus - AM', 'hamburgueria', 75.00, 'hambúrgueres artesanais'),
 ('id_res_10', 'id_cid_06', 'Thai', 'Al. Júlia da Costa, 870 - Bigorrilho, Curitiba - PR', 'tailandês', 130.00, 'pratos exóticos'),
 ('id_res_11', 'id_cid_10', 'Parraxaxá','Av. Fernando Simões Barbosa, 1200 - Boa Viagem, Recife - PE', 'regional', 47.00, 'pratos tipicos nordestinos'),
-('id_res_12', 'id_cid_11', 'Bené da Flauta','R. São Francisco de Assis, 32 - Centro, Ouro Preto - MG', 'clássico', 180.00, 'pratos executivos'),
-('id_res_13', 'id_cid_12', 'Dom Francisco', 'CLS 402 Bloco B, Lojas 9 a 15, Brasília - DF', 'comida variada', 90.00, 'pratos com bacalhau' ),
-('id_res_14', 'id_cid_13', 'Mangai', ' R. Des. João Vicente da Costa, 8861 - Ponta Negra, Natal - RN', 'nordestina', 129.00, 'comidas típicas'),
+('id_res_12', 'id_cid_11', 'Oscar','R. Sen. Rocha Lagoa, 164 - Centro - Ouro Preto - MG', 'regional', 180.00, 'Comida Mineira'),
+('id_res_13', 'id_cid_12',	'Dom Francisco', 'CLS 402 Bloco B, Lojas 9 a 15, Brasília - DF', 'comida variada', 90.00, 'pratos com bacalhau' ),
+('id_res_14', 'id_cid_13', 'Esmeralda Praia Hotel', 'R. Francisco Gurgel, 1160 - Ponta Negra, Natal - RN', 'nordestina', 129.00, 'comidas típicas'),
 ('id_res_15', 'id_cid_14', 'Nau Frutos do Mar','R. Lupércio Branco, 130 - Manaíra, João Pessoa - PB', 'Frutos do mar', 95.00, 'Frutos do Mar'),
 ('id_res_16', 'id_cid_14', 'Mangai', ' Av. Gen. Edson Ramalho, 696 - Manaíra, João Pessoa - PB', 'nordestina', 135.00, 'comidas típicas'),
 ('id_res_17', 'id_cid_15', 'Bodega do Sertão', 'Av. Dr. Júlio Marques Luz, 62 - Jatiúca, Maceió - AL', 'regional', 75.00, 'comidas típicas'),
@@ -175,6 +175,8 @@ INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, endereco, 
 ('id_res_19', 'id_cid_15', 'Divina Gula', 'Av. Eng. Paulo Brandão Nogueira, 85 - Jatiúca, Maceió - AL', 'brasileira', 70.00, 'comidas típicas'),
 ('id_res_20', 'id_cid_03', 'Casa de Tereza', ' R. Odilon Santos, 45 - Rio Vermelho, Salvador - BA', 'regional', 100.00, 'comidas típicas'),
 ('id_res_21', 'id_cid_05', 'Ostradamus', 'Rod. Baldicero Filomeno, 7640 - Ribeirão da Ilha, Florianópolis - SC', 'frutos do mar', 120.00, 'ostras'),
+('id_res_22', 'id_cid_03', 'Casarão', ' R. da Fonte do Boi, 215 - Rio Vermelho, Salvador - BA', 'baiana', 150.00, 'comidas típicas'),
+('id_res_23', 'id_cid_07', 'Mangostin e Mucuripe', 'Av. Beira Mar, 3980 - Loja 1 - Mucuripe, Fortaleza - CE', 'asiática', 200.00, 'comida asiática')
 ;
 
 -- Povoamento da tabela hotéis
@@ -182,9 +184,16 @@ INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, ca
 ('id_hot_01', 'id_cid_01', 'id_res_01', 'Copacabana Palace, A Belmond Hotel', 'Av. Atlântica, 1702', 9.4),
 ('id_hot_02', 'id_cid_02', 'id_res_02', 'Iconyc Charlie Ibirapuera Hotel', 'Rua Loefgren, 2527', 8.8),
 ('id_hot_03', 'id_cid_08', 'id_res_08', 'ibis budget Manaus', 'Avenida Djalma Batista, 1151', 8.4),
-('id_hot_04', 'id_cid_04', 'id_res_06', 'Hotel Vivenzo Savassi', 'Rua. Antônio de Albuquerque, 54', 8.6),
+('id_hot_04', 'id_cid_04', 'id_res_05', 'Hotel Vivenzo Savassi', 'Rua. Antônio de Albuquerque, 54', 8.6),
 ('id_hot_05', 'id_cid_07', 'id_res_07', 'Praiano Hotel', 'Av. Beira Mar, 2800', 9.2),
-('id_hot_06', 'id_cid_01', 'id_res_01', 'Hotel Arpoador',  'R. Francisco Otaviano, 177 - Ipanema', 8);
+('id_hot_06', 'id_cid_01', 'id_res_01', 'Hotel Arpoador',  'R. Francisco Otaviano, 177 - Ipanema', 8),
+('id_hot_07', 'id_cid_03', 'id_res_22', 'Hotel Mercure Salvador', 'R. da Fonte do Boi, 215 - Rio Vermelho, Salvador - BA', 9.2),
+('id_hot_08', 'id_cid_07', 'id_res_23', 'Hotel Gran Marquise', 'Av. Beira Mar, 3980 - Loja 1 - Mucuripe, Fortaleza - CE', 8.9),
+('id_hot_09', 'id_cid_11', 'id_res_12', 'Grande Hotel Ouro Preto', 'R. Sen. Rocha Lagoa, 164, Ouro Preto - MG' 8.0),
+('id_hot_10', 'id_cid_12', 'Esmeralda Praia Hotel', 'R. Francisco Gurgel, 1160 - Ponta Negra, Natal - RN', 9.2),
+('id_hot_11', 'id_cid_04', 'Hotel Fasano Belo Horizonte''R. São Paulo, 2320 - Lourdes, Belo Horizonte - MG', 9.0),
+('id_hot_12', 'id_cid_05', 'Majestic Palace Hotel''Av. Jorn. Rubéns de Arruda Ramos, 2746 - Centro, Florianópolis - SC', 8.5),
+('id_hot_13', 'id_cid_13', 'Go Inn Vitória', 'Av. João Batista Parra, 261 - Praia do Suá, Vitória - ES', 7.0);
 
 -- Povoamento da tabela quartos
 INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
@@ -196,8 +205,7 @@ INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
 
 -- Povoamento da tabela hotel_quarto
 INSERT INTO hotel_quarto (id_hotel, tipo_quarto) VALUES
-('id_hot_02', 'Standard'),
-('id_hot_02', 'Luxo'),
+('id_hot_02', 'Standard'),('id_hot_02', 'Luxo'),
 ('id_hot_01', 'Suíte Presidencial'),
 ('id_hot_04', 'Standard'),
 ('id_hot_02', 'Executivo'),
@@ -205,7 +213,18 @@ INSERT INTO hotel_quarto (id_hotel, tipo_quarto) VALUES
 ('id_hot_05', 'Familiar'),
 ('id_hot_01', 'Luxo'),
 ('id_hot_03', 'Luxo'),
-('id_hot_05', 'Suíte Presidencial');
+('id_hot_05', 'Suíte Presidencial'),
+('id_hot_06', 'Luxo'),('id_hot_06', 'Standard'),
+('id_hot_07', 'Standard'),('id_hot_07', 'Familiar'),('id_hot_07', 'Suíte Presidencial'),
+('id_hot_08', 'Luxo'),('id_hot_08', 'Suíte Presidencial'),('id_hot_08', 'Standard'),
+('id_hot_09', 'Luxo'),('id_hot_09', 'Suíte Presidencial'),
+('id_hot_09', 'Standard'),('id_hot_09', 'Executivo'),
+('id_hot_10', 'Standard'),('id_hot_10', 'Familiar'),('id_hot_10', 'Luxo'),
+('id_hot_11', 'Luxo'), ('id_hot_11', 'Suíte Presidencial'),
+('id_hot_12', 'Suíte Presidencial'),
+('id_hot_12', 'Standard'),
+('id_hot_12', 'Executivo'),
+('id_hot_13', 'Standard');
 
 -- Povoamento da tabela Casa_de_Shows
 
