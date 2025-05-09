@@ -1,4 +1,4 @@
--- ------------------------------- Criação Esquema ------------------------------- 
+------------------------------- Criação Esquema ------------------------------- 
 
 -- Se já existe o esquema agencia, deleta  
 DROP SCHEMA IF EXISTS agencia CASCADE; 
@@ -247,9 +247,9 @@ INSERT INTO casa_de_shows (id_pt_turistico, id_cidade, id_restaurante, descricao
 -- Povoamento da tabela museus
 INSERT INTO museus (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, salas) VALUES
 ('id_pt_05', 'id_cid_02', 'MASP', 'Avenida Paulista, no bairro da Bela Vista, 1578, São Paulo - SP','1947-10-07', 10),
-('id_pt_06', 'id_cid_03', 'Museu Afro-Brasileiro da UFBA', 'Largo do Terreiro de Jesus, s/n, Salvador - BA', '1982-01-07', 27 )
+('id_pt_06', 'id_cid_03', 'Museu Afro-Brasileiro da UFBA', 'Largo do Terreiro de Jesus, s/n, Salvador - BA', '1982-01-07', 27 ),
 ('id_pt_19', 'id_cid_16', 'Museu de Arte do Espirito Santo', 'Avenida Jerônimo Monteiro, 631, Centro, Vitória - ES','1998-12-18', 5),
-('id_pt_20', 'id_cid_11', 'Museu da Inconfidência', 'Praça Tiradentes, 139, Centro Histórico, Ouro Preto - MG', '1944-08-11', 16),
+('id_pt_20', 'id_cid_11', 'Museu da Inconfidência', 'Praça Tiradentes, 139, Centro Histórico, Ouro Preto - MG', '1944-08-11', 16)
 ;
 
 INSERT INTO fundador (id_fundador, nome_fundador, data_nascimento, data_falecimento, profissao, nacionalidade) VALUES
@@ -257,7 +257,7 @@ INSERT INTO fundador (id_fundador, nome_fundador, data_nascimento, data_falecime
 ('id_fun_02', 'Pierre Verger', '1902-11-04', '1996-02-11', 'Antropólogo', 'Francês'),
 ('id_fun_03', 'Yeda Pessoa de Castro', '1937-03-10', null, 'Etnolinguista', 'Brasileira'),
 ('id_fun_04', 'Paulo Herkenhoff', '1949-10-05', null, 'Curador de Arte', 'Brasileiro'),
-('id_fun_05', 'Raimundo Trindade', '1983-11-20', '1962-04-02', 'Historiador', 'Brasileiro'),
+('id_fun_05', 'Raimundo Trindade', '1983-11-20', '1962-04-02', 'Historiador', 'Brasileiro')
 ;
 
 -- Povoamento da tabela fundador_museus
@@ -265,7 +265,7 @@ INSERT INTO fundador_museus (id_pt_turistico, id_fundador) VALUES
 ('id_pt_05', 'id_fun_01'),
 ('id_pt_06', 'id_fun_02'),
 ('id_pt_06', 'id_fun_03'),
-('id_pt_19', 'id_fun_04')
+('id_pt_19', 'id_fun_04'),
 ('id_pt_20', 'id_fun_05');
 -- Povoamento da tabela igrejas
 INSERT INTO igreja (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, estilo) VALUES
