@@ -1,0 +1,286 @@
+-- ------------------------------- Criação Esquema ------------------------------- 
+
+-- Se já existe o esquema agencia, deleta  
+DROP SCHEMA IF EXISTS agencia CASCADE; 
+
+-- Cria o esquema agencia  
+CREATE SCHEMA agencia; 
+
+-- Define o caminho para o esquema agencia 
+SET search_path TO agencia; 
+
+-- ------------------------------- Criação Das Tabelas ------------------------------- 
+
+-- Tabela Cidade 
+CREATE TABLE cidade ( 
+    id_cidade CHAR(15) NOT NULL, 
+    nome VARCHAR(100) NOT NULL, 
+    estado VARCHAR(100) NOT NULL, 
+    populacao INTEGER, 
+    CONSTRAINT pk_cidade PRIMARY KEY (id_cidade) 
+); 
+
+-- Tabela Restaurante
+CREATE TABLE restaurante ( 
+    id_restaurante CHAR(15) NOT NULL, 
+    id_cidade CHAR(15) NOT NULL,
+    nome_restaurante VARCHAR(100) NOT NULL, 
+    categoria VARCHAR(100) NOT NULL, 
+    valor DECIMAL(10,2) NOT NULL, 
+    especialidade VARCHAR(100) NOT NULL, 
+    CONSTRAINT pk_restaurante PRIMARY KEY (id_restaurante),
+    CONSTRAINT fk_restaurante_cidade FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
+); 
+
+-- Tabela Hotel 
+CREATE TABLE hotel ( 
+    id_hotel CHAR(15) NOT NULL,
+    id_cidade CHAR(15) NOT NULL, 
+    id_restaurante CHAR(15) NOT NULL, 
+    nome_hotel VARCHAR(100) NOT NULL, 
+    endereco VARCHAR(100) NOT NULL, 
+    categoria DECIMAL(3,1) NOT NULL,
+    CONSTRAINT pk_hotel PRIMARY KEY (id_hotel), 
+    CONSTRAINT fk_hotel_cidade FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade), 
+    CONSTRAINT fk_hotel_restaurante FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante) 
+);
+
+-- Tabela Quarto 
+CREATE TABLE quarto( 
+    tipo_quarto VARCHAR(50) NOT NULL, 
+    qtd_quartos SMALLINT NOT NULL, 
+    diaria DECIMAL(10,2) NOT NULL, 
+    CONSTRAINT pk_quarto PRIMARY KEY (tipo_quarto)
+); 
+
+-- Tabela Hotel_Quarto 
+CREATE TABLE hotel_quarto ( 
+    id_hotel CHAR(15) NOT NULL,
+    tipo_quarto VARCHAR(50) NOT NULL,
+    CONSTRAINT pk_hotel_quarto PRIMARY KEY (id_hotel, tipo_quarto),
+    CONSTRAINT fk_hotel_quarto_hotel FOREIGN KEY (id_hotel) REFERENCES hotel (id_hotel),
+    CONSTRAINT fk_hotel_quarto_quarto FOREIGN KEY (tipo_quarto) REFERENCES quarto (tipo_quarto)
+);
+
+
+CREATE TABLE ponto_turistico (
+    id_pt_turistico CHAR(15) NOT NULL,
+    id_cidade CHAR(15) NOT NULL,
+    descricao VARCHAR(100) NOT NULL,
+    endereco VARCHAR(100) NOT NULL,
+    CONSTRAINT pk_ponto_turistico PRIMARY KEY (id_pt_turistico),
+    CONSTRAINT fk_pt_cidade FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
+	);
+
+	
+-- ideia de tabela para a casa de shows
+CREATE TABLE casa_de_shows( 
+    id_pt_turistico CHAR(15) NOT NULL,
+	id_cidade CHAR(15) NOT NULL,
+    id_restaurante CHAR(15), 
+	descricao VARCHAR(100) NOT NULL,
+	endereco VARCHAR(100) NOT NULL,
+    hora_inicio TIME NOT NULL, 
+    fechado VARCHAR (15),
+    CONSTRAINT pk_casa_de_shows PRIMARY KEY (id_pt_turistico),
+    CONSTRAINT fk_cds_pt FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade),
+    CONSTRAINT fk_cds_restaurante FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
+	);
+
+-- Tabela Museus 
+CREATE TABLE museus( 
+    id_pt_turistico CHAR(15) NOT NULL,
+	id_cidade CHAR(15) NOT NULL,
+    descricao VARCHAR(100) NOT NULL,
+	endereco VARCHAR(100) NOT NULL,
+    data_fundacao DATE NOT NULL,
+    salas SMALLINT NOT NULL,
+    CONSTRAINT pk_museus PRIMARY KEY (id_pt_turistico),
+	CONSTRAINT fk_cds_mu FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
+);
+
+-- Tabela Fundador 
+CREATE TABLE fundador( 
+    id_fundador CHAR(15) NOT NULL, 
+    nome_fundador VARCHAR(100) NOT NULL, 
+    data_nascimento DATE NOT NULL, 
+    data_falecimento DATE, 
+    profissao VARCHAR(100) NOT NULL, 
+    nacionalidade VARCHAR(100) NOT NULL, 
+    CONSTRAINT pk_fundador PRIMARY KEY (id_fundador) 
+);  
+
+-- Tabela Fundador museus
+CREATE TABLE fundador_museus( 
+    id_pt_turistico CHAR(15) NOT NULL,
+    id_fundador CHAR(15) NOT NULL,
+    CONSTRAINT pk_fundador_museus PRIMARY KEY (id_pt_turistico, id_fundador),
+    CONSTRAINT fk_fm_museu FOREIGN KEY (id_pt_turistico) REFERENCES museus (id_pt_turistico),
+    CONSTRAINT fk_fm_fundador FOREIGN KEY (id_fundador) REFERENCES fundador (id_fundador)
+);
+
+-- Tabela Igrejas 
+CREATE TABLE igreja( 
+    id_pt_turistico CHAR(15) NOT NULL,
+	id_cidade CHAR(15) NOT NULL,
+    descricao VARCHAR(100) NOT NULL,
+	endereco VARCHAR(100) NOT NULL,
+    data_fundacao DATE NOT NULL, 
+    estilo VARCHAR(100),
+    CONSTRAINT pk_igreja PRIMARY KEY (id_pt_turistico), 
+    CONSTRAINT fk_igreja_pt FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
+);
+
+-- ------------------------------- Povoamento das Tabelas -------------------------------
+
+-- Povoamento da tabela cidades
+INSERT INTO cidade (id_cidade, nome, estado, populacao) VALUES
+('id_cid_01', 'Rio de Janeiro', 'RJ', 6729894),
+('id_cid_02', 'São Paulo', 'SP', 11895578),
+('id_cid_03', 'Salvador', 'BA', 2568928),
+('id_cid_04', 'Belo Horizonte', 'MG', 2416339),
+('id_cid_05', 'Florianópolis', 'SC', 576361),
+('id_cid_06', 'Curitiba', 'PR', 1773718),
+('id_cid_07', 'Fortaleza', 'CE', 2574412),
+('id_cid_08', 'Manaus', 'AM', 2279686),
+('id_cid_09', 'Porto Alegre', 'RS', 1389322),
+('id_cid_10', 'Recife', 'PE', 1587707);
+
+-- Povoamento da tabela restaurantes
+INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, categoria, valor, especialidade) VALUES
+('id_res_01', 'id_cid_01', 'Restaurante Colombo', 'clássico', 150.00, 'comidas portuguesas'),
+('id_res_02', 'id_cid_02', 'Sabores da Itália', 'italiano', 120.00, 'massas artesanais'),
+('id_res_03', 'id_cid_02', 'Palácio do Sushi', 'japonês', 200.00, 'sushis e sashimis'),
+('id_res_04', 'id_cid_09', 'Churrascaria Sabores do Sul', 'churrascaria', 180.00, 'carnes nobres'),
+('id_res_05', 'id_cid_04', 'Paris Bistrô', 'francês', 220.00, 'culinária francesa contemporânea'),
+('id_res_06', 'id_cid_04', 'Tempero da Vovó', 'caseiro', 90.00, 'comidas mineiras típicas'),
+('id_res_07', 'id_cid_07', 'Vegetalia', 'vegetariano', 110.00, 'pratos vegetarianos'),
+('id_res_08', 'id_cid_08', 'Casa do Hamburguer', 'hamburgueria', 75.00, 'hambúrgueres artesanais'),
+('id_res_10', 'id_cid_06', 'Thai', 'tailandês', 130.00, 'pratos exóticos');
+
+-- Povoamento da tabela hotéis
+INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, categoria) VALUES
+('id_hot_01', 'id_cid_01', 'id_res_01', 'Copacabana Palace, A Belmond Hotel', 'Av. Atlântica, 1702', 9.4),
+('id_hot_02', 'id_cid_02', 'id_res_02', 'Iconyc Charlie Ibirapuera Hotel', 'Rua Loefgren, 2527', 8.8),
+('id_hot_03', 'id_cid_08', 'id_res_08', 'ibis budget Manaus', 'Avenida Djalma Batista, 1151', 8.4),
+('id_hot_04', 'id_cid_04', 'id_res_06', 'Hotel Vivenzo Savassi', 'Rua. Antônio de Albuquerque, 54', 8.6),
+('id_hot_05', 'id_cid_07', 'id_res_07', 'Praiano Hotel', 'Av. Beira Mar, 2800', 9.2),
+('id_hot_06', 'id_cid_01', 'id_res_01', 'Hotel Arpoador',  'R. Francisco Otaviano, 177 - Ipanema', 8);
+
+-- Povoamento da tabela quartos
+INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
+('Standard', 25, 350.00),
+('Luxo', 10, 1200.00),
+('Suíte Presidencial', 5, 5000.00),
+('Familiar', 20, 450.00),
+('Executivo', 15, 800.00);
+
+-- Povoamento da tabela hotel_quarto
+INSERT INTO hotel_quarto (id_hotel, tipo_quarto) VALUES
+('id_hot_02', 'Standard'),
+('id_hot_02', 'Luxo'),
+('id_hot_01', 'Suíte Presidencial'),
+('id_hot_04', 'Standard'),
+('id_hot_02', 'Executivo'),
+('id_hot_03', 'Standard'),
+('id_hot_05', 'Familiar'),
+('id_hot_01', 'Luxo'),
+('id_hot_03', 'Luxo'),
+('id_hot_05', 'Suíte Presidencial');
+
+-- Povoamento da tabela Casa_de_Shows
+
+INSERT INTO casa_de_shows (id_pt_turistico, id_cidade, id_restaurante, descricao, endereco, hora_inicio, fechado) VALUES
+('id_pt_01', 'id_cid_01',  'id_res_01', 'Corcovado - Cristo Redentor', 'Parque Nacional da Tijuca, - Alto da Boa vista Rio de Janeiro - RJ', '12:00:00', null),
+('id_pt_02', 'id_cid_01', null, 'Circo Voador', 'R. dos Arcos, s/n - Lapa, Rio de Janeiro - RJ', '20:00:00', 'Quarta-Feira'),
+('id_pt_03', 'id_cid_01', 'id_res_02', 'Bondinho Pão de Açúcar', 'Estação II - Morro da Urca / Praia Vermelha', '19:30:00', null),
+('id_pt_04', 'id_cid_02', null, 'Villa Country', 'Av. Francisco Matarazzo, 774 - Água Branca, São Paulo - SP', '20:00:00', 'Segunda-Feira')
+;
+
+-- Povoamento da tabela museus
+INSERT INTO museus (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, salas) VALUES
+('id_pt_05', 'id_cid_02', 'MASP', 'Avenida Paulista, no bairro da Bela Vista, 1578, São Paulo - SP','1947-10-07', 10),
+('id_pt_06', 'id_cid_03', 'Museu Afro-Brasileiro da UFBA', 'Largo do Terreiro de Jesus, s/n, Salvador - BA', '1982-01-07', 27 )
+;
+
+INSERT INTO fundador (id_fundador, nome_fundador, data_nascimento, data_falecimento, profissao, nacionalidade) VALUES
+('id_fun_01', 'Assis Chateaubriand', '1892-10-04', '1968-04-04', 'Empresário', 'Brasileira'),
+('id_fun_02', 'Pierre Verger', '1902-11-04', '1996-02-11', 'Antropólogo', 'Francês'),
+('id_fun_03', 'Yeda Pessoa de Castro', '1937-03-10', null, 'Etnolinguista', 'Brasileira')
+;
+
+-- Povoamento da tabela fundador_museus
+INSERT INTO fundador_museus (id_pt_turistico, id_fundador) VALUES
+('id_pt_05', 'id_fun_01'),
+('id_pt_06', 'id_fun_02'),
+('id_pt_06', 'id_fun_03');
+
+-- Povoamento da tabela igrejas
+INSERT INTO igreja (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, estilo) VALUES
+('id_pt_07', 'id_cid_04', 'Santuário São José', 'Rua Tupis, 164 - Centro  - Belo Horizonte - MG', '1900-01-27', 'neogótico'),
+('id_pt_08', 'id_cid_02', 'Catedral da Sé', 'Praça da Sé - Centro - São Paulo - SP', '1913-08-25', 'neogótico/renascentista'),
+('id_pt_09', 'id_cid_01', 'Catedral de São Sebastião', 'Av. República do Chile, 245 - Centro, Rio de Janeiro - RJ', '1964-01-20', 'modernista');
+
+-- 4. SQL/DML - Consultas
+
+-- A) Codificar, executar e apresentar o resultado de três consultas em SQL/DML que manipulem dados de pelo menos duas tabelas; 
+
+-- 1) 
+
+SELECT h.nome_hotel, c.nome AS cidade
+FROM hotel h
+JOIN cidade c ON h.id_cidade = c.id_cidade;
+
+-- 2)
+
+SELECT r.nome_restaurante, h.nome_hotel
+FROM restaurante r
+JOIN hotel h ON r.id_restaurante = h.id_restaurante;
+
+-- 3) 
+
+SELECT q.tipo_quarto, h.nome_hotel
+FROM hotel_quarto hq
+JOIN quarto q ON hq.tipo_quarto = q.tipo_quarto
+JOIN hotel h ON hq.id_hotel = h.id_hotel;
+
+-- B) Codificar, executar e apresentar o resultado de três consultas em SQL/DML usando funções de agregação; 
+
+-- 1) 
+
+SELECT ROUND (AVG(populacao) ,2) AS media_populacao
+FROM cidade;
+
+-- 2)
+
+SELECT ROUND (AVG(diaria) ,2) AS media_diaria
+FROM quarto;
+
+-- 3) 
+
+SELECT tipo_quarto, SUM(qtd_quartos) AS total_quartos
+FROM quarto
+GROUP BY tipo_quarto;
+
+-- C) Codificar, executar e apresentar o resultado de três consultas em SQL/DML usando funções de agregação, GROUP BY e HAVING;
+
+-- 1) 
+
+SELECT nome, populacao
+FROM cidade
+WHERE populacao > (SELECT AVG(populacao) FROM cidade);
+
+-- 2) 
+
+SELECT tipo_quarto, ROUND (AVG(diaria) ,2) AS media_diaria
+FROM quarto
+GROUP BY tipo_quarto
+HAVING AVG(diaria) > 300;
+
+-- 3)
+
+SELECT c.nome AS cidade, COUNT(h.id_hotel) AS qtd_hoteis
+FROM cidade c
+JOIN hotel h ON c.id_cidade = h.id_cidade
+GROUP BY c.nome
+HAVING COUNT(h.id_hotel) > 1;
