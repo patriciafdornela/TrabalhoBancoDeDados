@@ -25,12 +25,13 @@ CREATE TABLE restaurante (
     id_restaurante CHAR(15) NOT NULL, 
     id_cidade CHAR(15) NOT NULL,
     nome_restaurante VARCHAR(100) NOT NULL, 
+	endereco VARCHAR(100) NOT NULL,
     categoria VARCHAR(100) NOT NULL, 
     valor DECIMAL(10,2) NOT NULL, 
     especialidade VARCHAR(100) NOT NULL, 
     CONSTRAINT pk_restaurante PRIMARY KEY (id_restaurante),
     CONSTRAINT fk_restaurante_cidade FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade)
-); 
+);
 
 -- Tabela Hotel 
 CREATE TABLE hotel ( 
@@ -144,19 +145,37 @@ INSERT INTO cidade (id_cidade, nome, estado, populacao) VALUES
 ('id_cid_07', 'Fortaleza', 'CE', 2574412),
 ('id_cid_08', 'Manaus', 'AM', 2279686),
 ('id_cid_09', 'Porto Alegre', 'RS', 1389322),
-('id_cid_10', 'Recife', 'PE', 1587707);
+('id_cid_10', 'Recife', 'PE', 1587707),
+('id_cid_11', 'Ouro Preto', 'MG', 74821),
+('id_cid_12', 'Brasília', 'DF', 2817381),
+('id_cid_13', 'Natal', 'RN', 785368),
+('id_cid_14', 'João Pessoa', 'PB', 833932),
+('id_cid_15', 'Maceió', 'AL', 957916),
+('id_cid_16', 'Vitória', 'ES', 322869);
 
 -- Povoamento da tabela restaurantes
-INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, categoria, valor, especialidade) VALUES
-('id_res_01', 'id_cid_01', 'Restaurante Colombo', 'clássico', 150.00, 'comidas portuguesas'),
-('id_res_02', 'id_cid_02', 'Sabores da Itália', 'italiano', 120.00, 'massas artesanais'),
-('id_res_03', 'id_cid_02', 'Palácio do Sushi', 'japonês', 200.00, 'sushis e sashimis'),
-('id_res_04', 'id_cid_09', 'Churrascaria Sabores do Sul', 'churrascaria', 180.00, 'carnes nobres'),
-('id_res_05', 'id_cid_04', 'Paris Bistrô', 'francês', 220.00, 'culinária francesa contemporânea'),
-('id_res_06', 'id_cid_04', 'Tempero da Vovó', 'caseiro', 90.00, 'comidas mineiras típicas'),
-('id_res_07', 'id_cid_07', 'Vegetalia', 'vegetariano', 110.00, 'pratos vegetarianos'),
-('id_res_08', 'id_cid_08', 'Casa do Hamburguer', 'hamburgueria', 75.00, 'hambúrgueres artesanais'),
-('id_res_10', 'id_cid_06', 'Thai', 'tailandês', 130.00, 'pratos exóticos');
+INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, endereco, categoria, valor, especialidade) VALUES
+('id_res_01', 'id_cid_01', 'Restaurante Colombo', 'R. Gonçalves Dias, 32 - Centro, Rio de Janeiro - RJ', 'clássico', 150.00, 'comidas portuguesas'),
+('id_res_02', 'id_cid_02', 'Terraço Itália','Av. Ipiranga, 344 - 41º andar - República, São Paulo - SP', 'italiano', 120.00, 'massas artesanais'),
+('id_res_03', 'id_cid_02', 'Palácio do Sushi', 'Rua Otto Pfuntzenreuter, 379 - Costa e Silva - São Paulo - SP' 'japonês', 200.00, 'sushis e sashimis'),
+('id_res_04', 'id_cid_09', 'Churrascaria Freio de Ouro', 'R. José de Alencar, 460 - Menino Deus, Porto Alegre - RS', 'churrascaria', 180.00, 'carnes nobres'),
+('id_res_05', 'id_cid_04', 'Paris 6 Bistrô', 'Avenida do Contorno, 6061 - Shopping Patio Savassi - Belo Horizonte - MG','francês', 220.00, 'culinária francesa contemporânea'),
+('id_res_06', 'id_cid_04', 'Tempero da Vovó','Avenida Sebastião de Brito, 273 - Dona Clara, Belo Horizonte - MG' 'caseiro', 90.00, 'comidas mineiras típicas'),
+('id_res_07', 'id_cid_07', 'Mandir Restaurante Vegano', 'Rua Padre Francisco Pinto, 257 - Benfica, Fortaleza - CE' 'vegetariano', 110.00, 'pratos vegetarianos'),
+('id_res_08', 'id_cid_08', 'Casa do Hamburguer', 'Rua Luiz Antony - Aparecida, 1072 - A, Manaus - AM', 'hamburgueria', 75.00, 'hambúrgueres artesanais'),
+('id_res_10', 'id_cid_06', 'Thai', 'Al. Júlia da Costa, 870 - Bigorrilho, Curitiba - PR', 'tailandês', 130.00, 'pratos exóticos'),
+('id_res_11', 'id_cid_10', 'Parraxaxá','Av. Fernando Simões Barbosa, 1200 - Boa Viagem, Recife - PE', 'regional', 47.00, 'pratos tipicos nordestinos'),
+('id_res_12', 'id_cid_11', 'Bené da Flauta','R. São Francisco de Assis, 32 - Centro, Ouro Preto - MG', 'clássico', 180.00, 'pratos executivos'),
+('id_res_13', 'id_cid_12', 'Dom Francisco', 'CLS 402 Bloco B, Lojas 9 a 15, Brasília - DF', 'comida variada', 90.00, 'pratos com bacalhau' ),
+('id_res_14', 'id_cid_13', 'Mangai', ' R. Des. João Vicente da Costa, 8861 - Ponta Negra, Natal - RN', 'nordestina', 129.00, 'comidas típicas'),
+('id_res_15', 'id_cid_14', 'Nau Frutos do Mar','R. Lupércio Branco, 130 - Manaíra, João Pessoa - PB', 'Frutos do mar', 95.00, 'Frutos do Mar'),
+('id_res_16', 'id_cid_14', 'Mangai', ' Av. Gen. Edson Ramalho, 696 - Manaíra, João Pessoa - PB', 'nordestina', 135.00, 'comidas típicas'),
+('id_res_17', 'id_cid_15', 'Bodega do Sertão', 'Av. Dr. Júlio Marques Luz, 62 - Jatiúca, Maceió - AL', 'regional', 75.00, 'comidas típicas'),
+('id_res_18', 'id_cid_16', 'Restaurante Papaguth', 'Av. Nossa Sra. dos Navegantes, 700 - Enseada do Suá, Vitória - ES', 'frutos do mar', 190.00, 'comidas típicas capixaba'),
+('id_res_19', 'id_cid_15', 'Divina Gula', 'Av. Eng. Paulo Brandão Nogueira, 85 - Jatiúca, Maceió - AL', 'brasileira', 70.00, 'comidas típicas'),
+('id_res_20', 'id_cid_03', 'Casa de Tereza', ' R. Odilon Santos, 45 - Rio Vermelho, Salvador - BA', 'regional', 100.00, 'comidas típicas'),
+('id_res_21', 'id_cid_05', 'Ostradamus', 'Rod. Baldicero Filomeno, 7640 - Ribeirão da Ilha, Florianópolis - SC', 'frutos do mar', 120.00, 'ostras'),
+;
 
 -- Povoamento da tabela hotéis
 INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, categoria) VALUES
