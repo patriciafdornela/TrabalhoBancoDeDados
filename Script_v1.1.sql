@@ -47,7 +47,6 @@ CREATE TABLE hotel (
 );
 
 -- Tabela Quarto 
--- Tabela Quarto 
 CREATE TABLE quarto( 
     tipo_quarto VARCHAR(50) NOT NULL, 
     qtd_quartos SMALLINT NOT NULL, 
@@ -64,7 +63,7 @@ CREATE TABLE hotel_quarto (
     CONSTRAINT fk_hotel_quarto_quarto FOREIGN KEY (tipo_quarto) REFERENCES quarto (tipo_quarto)
 );
 
-
+-- Tabela Ponto Turístico 
 CREATE TABLE ponto_turistico (
     id_pt_turistico CHAR(15) NOT NULL,
     id_cidade CHAR(15) NOT NULL,
@@ -75,7 +74,7 @@ CREATE TABLE ponto_turistico (
 	);
 
 	
--- ideia de tabela para a casa de shows
+-- Tabela Casa de Shows
 CREATE TABLE casa_de_shows( 
     id_pt_turistico CHAR(15) NOT NULL,
 	id_cidade CHAR(15) NOT NULL,
@@ -87,7 +86,7 @@ CREATE TABLE casa_de_shows(
     CONSTRAINT pk_casa_de_shows PRIMARY KEY (id_pt_turistico),
     CONSTRAINT fk_cds_pt FOREIGN KEY (id_cidade) REFERENCES cidade (id_cidade),
     CONSTRAINT fk_cds_restaurante FOREIGN KEY (id_restaurante) REFERENCES restaurante (id_restaurante)
-	);
+);
 
 -- Tabela Museus 
 CREATE TABLE museus( 
@@ -177,8 +176,8 @@ INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, endereco, 
 ('id_res_20', 'id_cid_03', 'Casa de Tereza', ' R. Odilon Santos, 45 - Rio Vermelho, Salvador - BA', 'regional', 100.00, 'comidas típicas'),
 ('id_res_21', 'id_cid_05', 'Ostradamus', 'Rod. Baldicero Filomeno, 7640 - Ribeirão da Ilha, Florianópolis - SC', 'frutos do mar', 120.00, 'ostras'),
 ('id_res_22', 'id_cid_03', 'Casarão', ' R. da Fonte do Boi, 215 - Rio Vermelho, Salvador - BA', 'baiana', 150.00, 'comidas típicas'),
-('id_res_23', 'id_cid_07', 'Mangostin e Mucuripe', 'Av. Beira Mar, 3980 - Loja 1 - Mucuripe, Fortaleza - CE', 'asiática', 200.00, 'comida asiática')
-;
+('id_res_23', 'id_cid_07', 'Mangostin e Mucuripe', 'Av. Beira Mar, 3980 - Loja 1 - Mucuripe, Fortaleza - CE', 'asiática', 200.00, 'comida asiática');
+
 
 -- Povoamento da tabela hotéis
 INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, categoria) VALUES
@@ -241,24 +240,25 @@ INSERT INTO casa_de_shows (id_pt_turistico, id_cidade, id_restaurante, descricao
 ('id_pt_18', 'id_cid_09', 'id_res_04', 'Opiniao','R. José do Patrocínio, 834 - Cidade Baixa, Porto Alegre - RS', '19:00:00', null),
 ('id_pt_13', 'id_cid_13', null, 'Rastapé Casa de Forró','R. Aristides Porpino Filho', '22:00:00', 'Quinta-Feira'),
 ('id_pt_14', 'id_cid_14', null, 'Lovina Seixas', 'R. dos Pescadores, 426 - Seixas - João Pessoa- PB', '10:00:00', null),
-('id_pt_15', 'id_cid_15', 'id_res_17', 'Orákulo Chopperia', 'R. Barão de Jaraguá, 718 - Jaraguá, Maceio - AL', '21:00:00', 'Segunda-Feira')
-;
+('id_pt_15', 'id_cid_15', 'id_res_17', 'Orákulo Chopperia', 'R. Barão de Jaraguá, 718 - Jaraguá, Maceio - AL', '21:00:00', 'Segunda-Feira');
+
 
 -- Povoamento da tabela museus
 INSERT INTO museus (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, salas) VALUES
 ('id_pt_05', 'id_cid_02', 'MASP', 'Avenida Paulista, no bairro da Bela Vista, 1578, São Paulo - SP','1947-10-07', 10),
 ('id_pt_06', 'id_cid_03', 'Museu Afro-Brasileiro da UFBA', 'Largo do Terreiro de Jesus, s/n, Salvador - BA', '1982-01-07', 27 ),
 ('id_pt_19', 'id_cid_16', 'Museu de Arte do Espirito Santo', 'Avenida Jerônimo Monteiro, 631, Centro, Vitória - ES','1998-12-18', 5),
-('id_pt_20', 'id_cid_11', 'Museu da Inconfidência', 'Praça Tiradentes, 139, Centro Histórico, Ouro Preto - MG', '1944-08-11', 16)
-;
+('id_pt_20', 'id_cid_11', 'Museu da Inconfidência', 'Praça Tiradentes, 139, Centro Histórico, Ouro Preto - MG', '1944-08-11', 16);
 
+
+-- Povoamento da tabela fundador								
 INSERT INTO fundador (id_fundador, nome_fundador, data_nascimento, data_falecimento, profissao, nacionalidade) VALUES
 ('id_fun_01', 'Assis Chateaubriand', '1892-10-04', '1968-04-04', 'Empresário', 'Brasileira'),
 ('id_fun_02', 'Pierre Verger', '1902-11-04', '1996-02-11', 'Antropólogo', 'Francês'),
 ('id_fun_03', 'Yeda Pessoa de Castro', '1937-03-10', null, 'Etnolinguista', 'Brasileira'),
 ('id_fun_04', 'Paulo Herkenhoff', '1949-10-05', null, 'Curador de Arte', 'Brasileiro'),
-('id_fun_05', 'Raimundo Trindade', '1983-11-20', '1962-04-02', 'Historiador', 'Brasileiro')
-;
+('id_fun_05', 'Raimundo Trindade', '1983-11-20', '1962-04-02', 'Historiador', 'Brasileiro');
+
 
 -- Povoamento da tabela fundador_museus
 INSERT INTO fundador_museus (id_pt_turistico, id_fundador) VALUES
@@ -267,6 +267,7 @@ INSERT INTO fundador_museus (id_pt_turistico, id_fundador) VALUES
 ('id_pt_06', 'id_fun_03'),
 ('id_pt_19', 'id_fun_04'),
 ('id_pt_20', 'id_fun_05');
+
 -- Povoamento da tabela igrejas
 INSERT INTO igreja (id_pt_turistico, id_cidade, descricao, endereco, data_fundacao, estilo) VALUES
 ('id_pt_07', 'id_cid_04', 'Santuário São José', 'Rua Tupis, 164 - Centro  - Belo Horizonte - MG', '1900-01-27', 'neogótico'),
@@ -355,17 +356,18 @@ SELECT * FROM hotel WHERE id_hotel = 'id_hot_14';
 
 -- 	(b) Uma insersção que envolva cláusula CHECK.
 
-ALTER TABLE quarto ADD CHECK(diaria > 349.9);
+ALTER TABLE hotel_quarto ADD CHECK(diaria > 349.9);
 
---INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
---('Suíte Master', 10, 250.00);
+INSERT INTO hotel_quarto (id_hotel, tipo_quarto, diaria) VALUES
+('id_hot_08', 'Standard', 250.00);
 
---SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
+SELECT * FROM hotel_quarto WHERE tipo_quarto = 'Suíte Master';
 
---INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
---('Suíte Master', 10, 750.00);
+INSERT INTO hotel_quarto (id_hotel, tipo_quarto, diaria) VALUES
+('id_hot_08', 'Standard', 650.00);
 
---SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
+SELECT * FROM hotel_quarto WHERE id_hotel = 'id_hot_08';
+
 INSERT INTO quarto (tipo_quarto, qtd_quartos) VALUES
 ('Suíte Master', 10);
 
@@ -430,15 +432,16 @@ SELECT * FROM fundador_museus;
 
 --  (f) Uma atualização que envolVa dados obtidos de consultas a outras tabelas
 
-UPDATE quarto q SET diaria = diaria + (diaria*0.15)
-FROM  cidade c 
-JOIN hotel h ON h.id_cidade = c.id_cidade
-JOIN hotel_quarto hq ON hq.id_hotel = h.id_hotel
-WHERE c.id_cidade = 'id_cid_01'
-AND h.id_cidade = c.id_cidade
-AND q.tipo_quarto = hq.tipo_quarto;
+UPDATE hotel_quarto hq
+SET diaria = diaria + (diaria * 0.15)
+FROM hotel h
+JOIN cidade c ON h.id_cidade = c.id_cidade
+WHERE hq.id_hotel = h.id_hotel
+  AND c.id_cidade = 'id_cid_01';
+							 
+								   
 
-SELECT q.tipo_quarto, q.diaria, c.nome AS cidade
+SELECT q.tipo_quarto, hq.diaria, c.nome AS cidade
 FROM quarto q
 JOIN hotel_quarto hq ON q.tipo_quarto = hq.tipo_quarto
 JOIN hotel h ON hq.id_hotel = h.id_hotel
