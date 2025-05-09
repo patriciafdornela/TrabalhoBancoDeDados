@@ -47,10 +47,10 @@ CREATE TABLE hotel (
 );
 
 -- Tabela Quarto 
+-- Tabela Quarto 
 CREATE TABLE quarto( 
     tipo_quarto VARCHAR(50) NOT NULL, 
     qtd_quartos SMALLINT NOT NULL, 
-    diaria DECIMAL(10,2) NOT NULL, 
     CONSTRAINT pk_quarto PRIMARY KEY (tipo_quarto)
 ); 
 
@@ -58,6 +58,7 @@ CREATE TABLE quarto(
 CREATE TABLE hotel_quarto ( 
     id_hotel CHAR(15) NOT NULL,
     tipo_quarto VARCHAR(50) NOT NULL,
+    diaria DECIMAL(10,2) NOT NULL,
     CONSTRAINT pk_hotel_quarto PRIMARY KEY (id_hotel, tipo_quarto),
     CONSTRAINT fk_hotel_quarto_hotel FOREIGN KEY (id_hotel) REFERENCES hotel (id_hotel),
     CONSTRAINT fk_hotel_quarto_quarto FOREIGN KEY (tipo_quarto) REFERENCES quarto (tipo_quarto)
@@ -157,11 +158,11 @@ INSERT INTO cidade (id_cidade, nome, estado, populacao) VALUES
 INSERT INTO restaurante (id_restaurante, id_cidade, nome_restaurante, endereco, categoria, valor, especialidade) VALUES
 ('id_res_01', 'id_cid_01', 'Restaurante Colombo', 'R. Gonçalves Dias, 32 - Centro, Rio de Janeiro - RJ', 'clássico', 150.00, 'comidas portuguesas'),
 ('id_res_02', 'id_cid_02', 'Terraço Itália','Av. Ipiranga, 344 - 41º andar - República, São Paulo - SP', 'italiano', 120.00, 'massas artesanais'),
-('id_res_03', 'id_cid_02', 'Palácio do Sushi', 'Rua Otto Pfuntzenreuter, 379 - Costa e Silva - São Paulo - SP' 'japonês', 200.00, 'sushis e sashimis'),
+('id_res_03', 'id_cid_02', 'Palácio do Sushi', 'Rua Otto Pfuntzenreuter, 379 - Costa e Silva - São Paulo - SP', 'japonês', 200.00, 'sushis e sashimis'),
 ('id_res_04', 'id_cid_09', 'Churrascaria Freio de Ouro', 'R. José de Alencar, 460 - Menino Deus, Porto Alegre - RS', 'churrascaria', 180.00, 'carnes nobres'),
 ('id_res_05', 'id_cid_04', 'Paris 6 Bistrô', 'Avenida do Contorno, 6061 - Shopping Patio Savassi - Belo Horizonte - MG','francês', 220.00, 'culinária francesa contemporânea'),
-('id_res_06', 'id_cid_04', 'Gero','R. São Paulo, 2320 - Lourdes, Belo Horizonte - MG' 'italiano', 160.00, 'massas e risotos'),
-('id_res_07', 'id_cid_07', 'Mandir Restaurante Vegano', 'Rua Padre Francisco Pinto, 257 - Benfica, Fortaleza - CE' 'vegetariano', 110.00, 'pratos vegetarianos'),
+('id_res_06', 'id_cid_04', 'Gero','R. São Paulo, 2320 - Lourdes, Belo Horizonte - MG', 'italiano', 160.00, 'massas e risotos'),
+('id_res_07', 'id_cid_07', 'Mandir Restaurante Vegano', 'Rua Padre Francisco Pinto, 257 - Benfica, Fortaleza - CE', 'vegetariano', 110.00, 'pratos vegetarianos'),
 ('id_res_08', 'id_cid_08', 'Casa do Hamburguer', 'Rua Luiz Antony - Aparecida, 1072 - A, Manaus - AM', 'hamburgueria', 75.00, 'hambúrgueres artesanais'),
 ('id_res_10', 'id_cid_06', 'Thai', 'Al. Júlia da Costa, 870 - Bigorrilho, Curitiba - PR', 'tailandês', 130.00, 'pratos exóticos'),
 ('id_res_11', 'id_cid_10', 'Parraxaxá','Av. Fernando Simões Barbosa, 1200 - Boa Viagem, Recife - PE', 'regional', 47.00, 'pratos tipicos nordestinos'),
@@ -189,42 +190,42 @@ INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, ca
 ('id_hot_06', 'id_cid_01', 'id_res_01', 'Hotel Arpoador',  'R. Francisco Otaviano, 177 - Ipanema', 8),
 ('id_hot_07', 'id_cid_03', 'id_res_22', 'Hotel Mercure Salvador', 'R. da Fonte do Boi, 215 - Rio Vermelho, Salvador - BA', 9.2),
 ('id_hot_08', 'id_cid_07', 'id_res_23', 'Hotel Gran Marquise', 'Av. Beira Mar, 3980 - Loja 1 - Mucuripe, Fortaleza - CE', 8.9),
-('id_hot_09', 'id_cid_11', 'id_res_12', 'Grande Hotel Ouro Preto', 'R. Sen. Rocha Lagoa, 164, Ouro Preto - MG' 8.0),
-('id_hot_10', 'id_cid_12', 'Esmeralda Praia Hotel', 'R. Francisco Gurgel, 1160 - Ponta Negra, Natal - RN', 9.2),
-('id_hot_11', 'id_cid_04', 'Hotel Fasano Belo Horizonte''R. São Paulo, 2320 - Lourdes, Belo Horizonte - MG', 9.0),
-('id_hot_12', 'id_cid_05', 'Majestic Palace Hotel''Av. Jorn. Rubéns de Arruda Ramos, 2746 - Centro, Florianópolis - SC', 8.5),
-('id_hot_13', 'id_cid_13', 'Go Inn Vitória', 'Av. João Batista Parra, 261 - Praia do Suá, Vitória - ES', 7.0);
+('id_hot_09', 'id_cid_11', 'id_res_12', 'Grande Hotel Ouro Preto', 'R. Sen. Rocha Lagoa, 164, Ouro Preto - MG', 8.0),
+('id_hot_10', 'id_cid_12', 'id_res_13','Esmeralda Praia Hotel', 'R. Francisco Gurgel, 1160 - Ponta Negra, Natal - RN', 9.2),
+('id_hot_11', 'id_cid_04', 'id_res_06','Hotel Fasano Belo Horizonte','R. São Paulo, 2320 - Lourdes, Belo Horizonte - MG', 9.0),
+('id_hot_12', 'id_cid_05', 'id_res_21','Majestic Palace Hotel','Av. Jorn. Rubéns de Arruda Ramos, 2746 - Centro, Florianópolis - SC', 8.5),
+('id_hot_13', 'id_cid_16', 'id_res_18','Go Inn Vitória', 'Av. João Batista Parra, 261 - Praia do Suá, Vitória - ES', 7.0);
 
 -- Povoamento da tabela quartos
-INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
-('Standard', 25, 350.00),
-('Luxo', 10, 1200.00),
-('Suíte Presidencial', 5, 5000.00),
-('Familiar', 20, 450.00),
-('Executivo', 15, 800.00);
+INSERT INTO quarto (tipo_quarto, qtd_quartos) VALUES
+('Standard', 25),
+('Luxo', 10),
+('Suíte Presidencial', 5),
+('Familiar', 20),
+('Executivo', 15);
 
 -- Povoamento da tabela hotel_quarto
-INSERT INTO hotel_quarto (id_hotel, tipo_quarto) VALUES
-('id_hot_02', 'Standard'),('id_hot_02', 'Luxo'),
-('id_hot_01', 'Suíte Presidencial'),
-('id_hot_04', 'Standard'),
-('id_hot_02', 'Executivo'),
-('id_hot_03', 'Standard'),
-('id_hot_05', 'Familiar'),
-('id_hot_01', 'Luxo'),
-('id_hot_03', 'Luxo'),
-('id_hot_05', 'Suíte Presidencial'),
-('id_hot_06', 'Luxo'),('id_hot_06', 'Standard'),
-('id_hot_07', 'Standard'),('id_hot_07', 'Familiar'),('id_hot_07', 'Suíte Presidencial'),
-('id_hot_08', 'Luxo'),('id_hot_08', 'Suíte Presidencial'),('id_hot_08', 'Standard'),
-('id_hot_09', 'Luxo'),('id_hot_09', 'Suíte Presidencial'),
-('id_hot_09', 'Standard'),('id_hot_09', 'Executivo'),
-('id_hot_10', 'Standard'),('id_hot_10', 'Familiar'),('id_hot_10', 'Luxo'),
-('id_hot_11', 'Luxo'), ('id_hot_11', 'Suíte Presidencial'),
-('id_hot_12', 'Suíte Presidencial'),
-('id_hot_12', 'Standard'),
-('id_hot_12', 'Executivo'),
-('id_hot_13', 'Standard');
+INSERT INTO hotel_quarto (id_hotel, tipo_quarto, diaria) VALUES
+('id_hot_02', 'Standard', 350.00),('id_hot_02', 'Luxo', 1200.00),
+('id_hot_01', 'Suíte Presidencial', 5000.00),
+('id_hot_04', 'Standard',300.00),
+('id_hot_02', 'Executivo', 800.00),
+('id_hot_03', 'Standard', 400.00),
+('id_hot_05', 'Familiar', 450.00),
+('id_hot_01', 'Luxo', 1000.00),
+('id_hot_03', 'Luxo',1100.00),
+('id_hot_05', 'Suíte Presidencial', 2000.00),
+('id_hot_06', 'Luxo', 950.00),('id_hot_06', 'Standard', 250.00),
+('id_hot_07', 'Standard', 350.90),('id_hot_07', 'Familiar', 420.00),('id_hot_07', 'Suíte Presidencial', 6500.00),
+('id_hot_08', 'Luxo',100.00),('id_hot_08', 'Suíte Presidencial', 3000.00),('id_hot_08', 'Standard', 290.00),
+('id_hot_09', 'Luxo', 850.00 ),('id_hot_09', 'Suíte Presidencial', 1500.00),
+('id_hot_09', 'Standard', 300.00),('id_hot_09', 'Executivo', 950.00),
+('id_hot_10', 'Standard', 900.00),('id_hot_10', 'Familiar', 500.00),('id_hot_10', 'Luxo', 1200.00),
+('id_hot_11', 'Luxo', 1350.00), ('id_hot_11', 'Suíte Presidencial', 3900.00),
+('id_hot_12', 'Suíte Presidencial', 4500.00),
+('id_hot_12', 'Standard', 320.00),
+('id_hot_12', 'Executivo', 680.00),
+('id_hot_13', 'Standard', 280.00);
 
 -- Povoamento da tabela Casa_de_Shows
 
@@ -292,7 +293,7 @@ FROM cidade;
 -- 2)
 
 SELECT ROUND (AVG(diaria) ,2) AS media_diaria
-FROM quarto;
+FROM hotel_quarto;
 
 -- 3) 
 
@@ -310,10 +311,15 @@ WHERE populacao > (SELECT AVG(populacao) FROM cidade);
 
 -- 2) 
 
-SELECT tipo_quarto, ROUND (AVG(diaria) ,2) AS media_diaria
-FROM quarto
-GROUP BY tipo_quarto
-HAVING AVG(diaria) > 300;
+--SELECT tipo_quarto, ROUND (AVG(diaria) ,2) AS media_diaria
+--FROM quarto
+--GROUP BY tipo_quarto
+--HAVING AVG(diaria) > 300;
+
+SELECT q.tipo_quarto, ROUND(AVG(hq.diaria),2) AS media_diaria
+FROM quarto q INNER JOIN hotel_quarto hq ON q.tipo_quarto = hq.tipo_quarto
+GROUP BY q.tipo_quarto
+HAVING AVG (hq.diaria) > 300;
 
 -- 3)
 
@@ -330,24 +336,32 @@ HAVING COUNT(h.id_hotel) > 1;
 --  (a) Uma inserção que envolva integridade referencial.
 
 INSERT INTO hotel (id_hotel, id_cidade, id_restaurante, nome_hotel, endereco, categoria) VALUES
-('id_hot_10', 'id_cid_10', 'id_res_10', 'Hotel Atlante Plaza', 'Av. Boa Viagem, 5426', 8.4);
+('id_hot_14', 'id_cid_10', 'id_res_10', 'Hotel Atlante Plaza', 'Av. Boa Viagem, 5426', 8.4);
 
-SELECT * FROM hotel WHERE id_hotel = 'id_hot_10';
+SELECT * FROM hotel WHERE id_hotel = 'id_hot_14';
 
 -- 	(b) Uma insersção que envolva cláusula CHECK.
 
 ALTER TABLE quarto ADD CHECK(diaria > 349.9);
 
-INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
-('Suíte Master', 10, 250.00);
+--INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
+--('Suíte Master', 10, 250.00);
+
+--SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
+
+--INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
+--('Suíte Master', 10, 750.00);
+
+--SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
+INSERT INTO quarto (tipo_quarto, qtd_quartos) VALUES
+('Suíte Master', 10);
 
 SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
 
-INSERT INTO quarto (tipo_quarto, qtd_quartos, diaria) VALUES
-('Suíte Master', 10, 750.00);
+INSERT INTO quarto (tipo_quarto, qtd_quartos) VALUES
+('Suíte Master', 10);
 
 SELECT * FROM quarto WHERE tipo_quarto = 'Suíte Master';
-
 --  (c) Uma inserção de dados em uma tabela à partir de dados em outra tabela, ou seja,
 --  uso do SELECT em INSERT.
 
