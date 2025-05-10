@@ -21,14 +21,21 @@ SELECT * FROM agencia.hotel_restaurante_cidade;
 
 -- Resultado da consulta/visão integridade:
 /*
-nome_hotel				nome_restaurante	cidade			estado
+nome_hotel				nome_restaurante		cidade			estado
 
-"Copacabana Palace, A Belmond Hotel"	"Restaurante Colombo"	"Rio de Janeiro"	"RJ"
-"Iconyc Charlie Ibirapuera Hotel"	"Sabores da Itália"	"São Paulo"		"SP"
-"ibis budget Manaus"			"Casa do Hamburguer"	"Manaus"		"AM"
-"Hotel Vivenzo Savassi"			"Tempero da Vovó"	"Belo Horizonte"	"MG"
-"Praiano Hotel"				"Vegetalia"		"Fortaleza"		"CE"
-"Hotel Arpoador"			"Restaurante Colombo"	"Rio de Janeiro"	"RJ"
+"Copacabana Palace, A Belmond Hotel"	"Restaurante Colombo"		"Rio de Janeiro"	"RJ"
+"Iconyc Charlie Ibirapuera Hotel"	"Terraço Itália"		"São Paulo"		"SP"
+"ibis budget Manaus"			"Casa do Hamburguer"		"Manaus"		"AM"
+"Hotel Vivenzo Savassi"			"Paris 6 Bistrô"		"Belo Horizonte"	"MG"
+"Praiano Hotel"				"Mandir Restaurante Vegano"	"Fortaleza"		"CE"
+"Hotel Arpoador"			"Restaurante Colombo"		"Rio de Janeiro"	"RJ"
+"Hotel Mercure Salvador"		"Casarão"			"Salvador"		"BA"
+"Hotel Gran Marquise"			"Mangostin e Mucuripe"		"Fortaleza"		"CE"
+"Grande Hotel Ouro Preto"		"Oscar"				"Ouro Preto"		"MG"
+"Esmeralda Praia Hotel"			"Dom Francisco"			"Brasília"		"DF"
+"Hotel Fasano Belo Horizonte"		"Gero"				"Belo Horizonte"	"MG"
+"Majestic Palace Hotel"			"Ostradamus"			"Florianópolis"		"SC"
+"Go Inn Vitória"			"Restaurante Papaguth"		"Vitória"		"ES"
 */
 
 
@@ -39,18 +46,18 @@ CREATE OR REPLACE VIEW agencia.quartos_por_hotel AS
 SELECT 
     h.nome_hotel,
     q.tipo_quarto,
-    q.diaria,
+    hq.diaria,
     c.nome AS cidade
 FROM 
     agencia.hotel h
 INNER JOIN 
     agencia.hotel_quarto hq ON h.id_hotel = hq.id_hotel
 INNER JOIN 
-    agencia.quarto q ON hq.tipo_quarto = q.tipo_quarto
+    agencia.quarto q ON hq.tipo_quarto = q.tipo_quarto  -- Correção aqui
 INNER JOIN 
     agencia.cidade c ON h.id_cidade = c.id_cidade
 ORDER BY 
-    h.nome_hotel, q.diaria;
+    h.nome_hotel, hq.diaria;
 
 -- Para a consulta da visão de disponibilidade:
 
@@ -61,16 +68,37 @@ SELECT * FROM agencia.quartos_por_hotel;
 /*
 nome_hotel				tipo_quarto		diaria		cidade
 		
-"Copacabana Palace, A Belmond Hotel"	"Luxo"			1200.00		"Rio de Janeiro"
+"Copacabana Palace, A Belmond Hotel"	"Luxo"			1000.00		"Rio de Janeiro"
 "Copacabana Palace, A Belmond Hotel"	"Suíte Presidencial"	5000.00		"Rio de Janeiro"
-"Hotel Vivenzo Savassi"			"Standard"		350.00		"Belo Horizonte"
-"ibis budget Manaus"			"Standard"		350.00		"Manaus"
-"ibis budget Manaus"			"Luxo"			1200.00		"Manaus"
+"Esmeralda Praia Hotel"			"Familiar"		500.00		"Brasília"
+"Esmeralda Praia Hotel"			"Standard"		900.00		"Brasília"
+"Esmeralda Praia Hotel"			"Luxo"			1200.00		"Brasília"
+"Go Inn Vitória"			"Standard"		280.00		"Vitória"
+"Grande Hotel Ouro Preto"		"Standard"		300.00		"Ouro Preto"
+"Grande Hotel Ouro Preto"		"Luxo"			850.00		"Ouro Preto"
+"Grande Hotel Ouro Preto"		"Executivo"		950.00		"Ouro Preto"
+"Grande Hotel Ouro Preto"		"Suíte Presidencial"	1500.00		"Ouro Preto"
+"Hotel Arpoador"			"Standard"		250.00		"Rio de Janeiro"
+"Hotel Arpoador"			"Luxo"			950.00		"Rio de Janeiro"
+"Hotel Fasano Belo Horizonte"		"Luxo"			1350.00		"Belo Horizonte"
+"Hotel Fasano Belo Horizonte"		"Suíte Presidencial"	3900.00		"Belo Horizonte"
+"Hotel Gran Marquise"			"Luxo"			100.00		"Fortaleza"
+"Hotel Gran Marquise"			"Standard"		290.00		"Fortaleza"
+"Hotel Gran Marquise"			"Suíte Presidencial"	3000.00		"Fortaleza"
+"Hotel Mercure Salvador"		"Standard"		350.90		"Salvador"
+"Hotel Mercure Salvador"		"Familiar"		420.00		"Salvador"
+"Hotel Mercure Salvador"		"Suíte Presidencial"	6500.00		"Salvador"
+"Hotel Vivenzo Savassi"			"Standard"		300.00		"Belo Horizonte"
+"ibis budget Manaus"			"Standard"		400.00		"Manaus"
+"ibis budget Manaus"			"Luxo"			1100.00		"Manaus"
 "Iconyc Charlie Ibirapuera Hotel"	"Standard"		350.00		"São Paulo"
 "Iconyc Charlie Ibirapuera Hotel"	"Executivo"		800.00		"São Paulo"
 "Iconyc Charlie Ibirapuera Hotel"	"Luxo"			1200.00		"São Paulo"
+"Majestic Palace Hotel"			"Standard"		320.00		"Florianópolis"
+"Majestic Palace Hotel"			"Executivo"		680.00		"Florianópolis"
+"Majestic Palace Hotel"			"Suíte Presidencial"	4500.00		"Florianópolis"
 "Praiano Hotel"				"Familiar"		450.00		"Fortaleza"
-"Praiano Hotel"				"Suíte Presidencial"	5000.00		"Fortaleza"
+"Praiano Hotel"				"Suíte Presidencial"	2000.00		"Fortaleza"
 */
 
 
@@ -104,4 +132,10 @@ nome			estado		populacao
 "Manaus"		"AM"		2279686
 "Porto Alegre"		"RS"		1389322
 "Recife"		"PE"		1587707
+"Ouro Preto"		"MG"		74821
+"Brasília"		"DF"		2817381
+"Natal"			"RN"		785368
+"João Pessoa"		"PB"		833932
+"Maceió"		"AL"		957916
+"Vitória"		"ES"		322869
 */
